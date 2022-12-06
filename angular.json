@@ -81,6 +81,14 @@
           }
         },
         "test": {
+          "configurations": {
+            "production": {
+              "sourceMap": false,
+              "codeCoverage": true,
+              "browsers": "ChromeHeadless",
+              "watch": false
+            }
+          },
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
