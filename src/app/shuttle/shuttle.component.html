@@ -1,1 +1,29 @@
-<p>shuttle works!</p>
+<mat-toolbar color="primary">
+    Shuttles
+    <div class="spacer"></div>
+    <mat-chip-listbox aria-label="Ride selection">
+        <mat-chip-option (click)="loadRides('Shuttles')" [selected]="currentFilter=='Shuttles'">Shuttles</mat-chip-option>
+        <mat-chip-option (click)="loadRides('Carpools')" [selected]="currentFilter=='Carpools'">Carpools</mat-chip-option>
+    </mat-chip-listbox>
+    <button style="margin-left:10px;" mat-mini-fab><mat-icon>refresh</mat-icon></button>
+</mat-toolbar>
+<div class="content-wrapper">
+    <div>
+        <h2>{{currentFilter}}</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let ride of filtered_rides">
+                <mat-card-header>
+                    <mat-card-subtitle>{{ride.destination}}</mat-card-subtitle>
+                    <mat-card-title>{{ride.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>JOIN</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <button *ngIf="currentFilter=='Carpools'" class="add-class" (click)="createCarpool()" mat-fab><mat-icon>add</mat-icon></button>
+    </div>
+</div>

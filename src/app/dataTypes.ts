@@ -13,6 +13,7 @@ export class User {
         public first_name?: string,
         public last_name?: string,
         public email?: string,
+        public password?: string,
         public rental?: Rentable[],
     ) {}
 }
@@ -45,4 +46,18 @@ export class Rentable {
         public end_date?: Date,
     ) {}
     
+}
+
+export class Ride {
+
+    constructor(
+        public id: number,
+        public name?: string,
+        public type?: string,
+        public destination?: string,
+        public time?: Date,
+        public leader?: User,
+        public members?: User[],
+    ) {}
+
 }

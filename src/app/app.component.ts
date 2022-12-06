@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from './dataTypes';
+import { Users } from './mock-users';
 import { Page } from './page';
 
 @Component({
@@ -6,8 +8,8 @@ import { Page } from './page';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'bcs329';
+export class AppComponent implements OnInit {
+
   pages: Page[] = [
     { link: "/dashboard", name: "Dashboard", icon: "home"},
     { link: "/rent", name: "Rent", icon: "sell"},
@@ -15,4 +17,20 @@ export class AppComponent {
     { link: "/shuttle", name: "Shuttle", icon: "bus"},
     { link: "/homecare", name: "Home Care", icon: "woman"},
   ]
+
+  user: User = new User(-1);
+
+  constructor() {}
+
+  refreshLoginBar(): void {
+    const uid: number = Number(localStorage.getItem('userId'));
+    if ( uid != null && uid - 1 > -1 ) {
+      this.user = Users[uid];
+      console.log(this.user.first_name);
+    }
+  }
+
+  ngOnInit(): void {
+    this.refreshLoginBar();
+  }
 }

@@ -2,9 +2,9 @@
     Rent
     <div class="spacer"></div>
     <mat-chip-listbox aria-label="Renting selection">
-        <mat-chip-option (click)="loadRentables('Rooms')" selected>Rooms</mat-chip-option>
-        <mat-chip-option (click)="loadRentables('Equipment')">Equipment</mat-chip-option>
-        <mat-chip-option (click)="loadRentables('Cater')">Catering</mat-chip-option>
+        <mat-chip-option (click)="loadRentables('Rooms')" [selected]="currentFilter=='Room'">Room</mat-chip-option>
+        <mat-chip-option (click)="loadRentables('Equipment')" [selected]="currentFilter=='Equipment'">Equipment</mat-chip-option>
+        <mat-chip-option (click)="loadRentables('Cater')" [selected]="currentFilter=='Cater'">Catering</mat-chip-option>
     </mat-chip-listbox>
 </mat-toolbar>
 <div class="content-wrapper">

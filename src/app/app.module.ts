@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRippleModule } from '@angular/material/core';
 
 import { AppComponent } from './app.component';
 import { RentComponent, RentSelectComponent } from './rent/rent.component';
@@ -27,9 +28,16 @@ import { ShuttleComponent } from './shuttle/shuttle.component';
 import { HomecareComponent } from './homecare/homecare.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddAssignmentComponent, EditCourseComponent, ViewCourseComponent } from './course/view-course/view-course.component';
+import { AccountComponent } from './account/account.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
+import { User } from './dataTypes';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
+  { path: 'account', component: AccountComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
   { path: 'rent', component: RentComponent},
   { path: 'course', component: CourseComponent},
   { path: 'course/view', component: ViewCourseComponent},
@@ -49,7 +57,10 @@ const routes: Routes = [
     CreateCourseComponent,
     ViewCourseComponent,
     EditCourseComponent,
-    AddAssignmentComponent
+    AddAssignmentComponent,
+    AccountComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -72,10 +83,12 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatRippleModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })
 export class AppModule {
+
 }

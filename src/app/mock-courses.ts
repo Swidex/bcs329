@@ -3,14 +3,14 @@ import { Users } from "./mock-users";
 
 export const Courses: Course[] = [
     {
-        id: 0,
+        id: 1,
         name: "COMS 329",
-        prof: Users[1],
+        prof: Users[2],
         desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         requirements: "COMS 309, COMS 228",
         start_date: new Date("8/20/22"),
         end_date: new Date("12/16/22"),
-        students: [Users[0]],
+        students: [Users[1]],
         assignments: [
             {
                 name: "Risks & Lessons Learned Deliverable",
@@ -33,9 +33,9 @@ export const Courses: Course[] = [
         ],
     },
     {
-        id: 1,
+        id: 2,
         name: "CPRE 309",
-        prof: Users[2],
+        prof: Users[3],
         desc: "Integer quis auctor elit sed vulputate. Neque ornare aenean euismod elementum nisi quis eleifend quam. Fermentum leo vel orci porta non pulvinar neque.",
         requirements: "CPRE 388",
         start_date: new Date("8/20/22"),
@@ -57,7 +57,7 @@ export const Courses: Course[] = [
     {
         id: 2,
         name: "COMS 310",
-        prof: Users[3],
+        prof: Users[4],
         desc: "Vitae elementum curabitur vitae nunc sed velit dignissim. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.",
         requirements: "CPRE 228",
         start_date: new Date("8/20/22"),
@@ -79,7 +79,7 @@ export const Courses: Course[] = [
     {
         id: 3,
         name: "COMS 252",
-        prof: Users[4],
+        prof: Users[5],
         desc: "Elit ullamcorper dignissim cras tincidunt lobortis. Non odio euismod lacinia at quis risus sed. Faucibus a pellentesque sit amet porttitor eget.",
         start_date: new Date("8/20/22"),
         end_date: new Date("12/16/22"),
@@ -100,7 +100,7 @@ export const Courses: Course[] = [
     {
         id: 4,
         name: "TEST 101",
-        prof: Users[0],
+        prof: Users[1],
         desc: "N/A",
         start_date: new Date("8/20/22"),
         end_date: new Date("12/16/22"),
