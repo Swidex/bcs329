@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Rent {{rentable.type}} - {{rentable.name}}</h2>
+<mat-dialog-content>
+    <form [formGroup]="rentSelectForm">
+        <mat-form-field class="form-full-size" MatFormFieldControl="quantity" appearance="fill">
+            <mat-label>Quantity</mat-label>
+            <input matInput id="quantity" formControlName="quantity">
+        </mat-form-field>
+        <div class="form-group">
+            <mat-form-field MatFormFieldControl="start_date" appearance="fill">
+                <mat-label>Rent Date</mat-label>
+                <input matInput [matDatepicker]="start_picker" formControlName="start_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="start_picker"></mat-datepicker-toggle>
+                <mat-datepicker #start_picker></mat-datepicker>
+            </mat-form-field>  
+            <mat-form-field MatFormFieldControl="end_date" appearance="fill">
+                <mat-label>Return Date</mat-label>
+                <input matInput [matDatepicker]="end_picker" formControlName="end_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="end_picker"></mat-datepicker-toggle>
+                <mat-datepicker #end_picker></mat-datepicker>
+            </mat-form-field>  
+        </div>
+        <div class="form-group">
+            <mat-form-field class="form-full-size" MatFormFieldControl="ccn" appearance="fill">
+                <mat-label>Credit Card Number</mat-label>
+                <input matInput id="ccn" formControlName="ccn">
+            </mat-form-field>
+            <mat-form-field class="form-full-size" MatFormFieldControl="cvv" appearance="fill">
+                <mat-label>CVV</mat-label>
+                <input matInput id="cvv" formControlName="cvv">
+            </mat-form-field>
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button type="submit" (click)="onSubmit()" [mat-dialog-close]="true" cdkFocusInitial>Rent</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>
