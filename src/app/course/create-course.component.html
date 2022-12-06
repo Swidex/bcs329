@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Create a Course</h2>
+<mat-dialog-content>
+    <form [formGroup]="createCourseForm">
+        <div class="form-group">
+            <mat-form-field class="form-full-size" MatFormFieldControl="name" appearance="fill">
+                <mat-label>Course Name</mat-label>
+                <input matInput id="name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="form-full-size" MatFormFieldControl="professor" appearance="fill">
+                <mat-label>Professor Name</mat-label>
+                <input matInput id="name" formControlName="professor">
+            </mat-form-field>
+        </div>
+        <mat-form-field class="form-full-size" MatFormFieldControl="desc" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput id="desc" formControlName="desc"></textarea>
+        </mat-form-field>
+        <mat-form-field class="form-full-size" MatFormFieldControl="requirements" appearance="fill">
+            <mat-label>Requirements</mat-label>
+            <textarea matInput id="desc" formControlName="requirements"></textarea>
+        </mat-form-field>
+        <div class="form-group">
+            <mat-form-field MatFormFieldControl="start_date" appearance="fill">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="start_picker" formControlName="start_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="start_picker"></mat-datepicker-toggle>
+                <mat-datepicker #start_picker></mat-datepicker>
+            </mat-form-field>  
+            <mat-form-field MatFormFieldControl="end_date" appearance="fill">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="end_picker" formControlName="end_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="end_picker"></mat-datepicker-toggle>
+                <mat-datepicker #end_picker></mat-datepicker>
+            </mat-form-field>  
+        </div>
+                
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button type="submit" (click)="onSubmit()" [mat-dialog-close]="true" cdkFocusInitial>Create</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

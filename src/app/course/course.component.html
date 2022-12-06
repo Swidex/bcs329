@@ -1,0 +1,79 @@
+<mat-toolbar color="primary">
+    Courses
+    <div class="spacer"></div>
+    <mat-chip-listbox aria-label="Class selection">
+        <mat-chip-option id="apply-chip" (click)="setTab('apply')" [selected]="isCurrentTab('apply')">Available Courses</mat-chip-option>
+        <mat-chip-option id="current-chip" (click)="setTab('current')" [selected]="isCurrentTab('current')">Current Courses</mat-chip-option>
+        <mat-chip-option id="schedule-chip" (click)="setTab('schedule')" [selected]="isCurrentTab('schedule')">Schedule</mat-chip-option>
+    </mat-chip-listbox>
+    <button style="margin-left:10px;" (click)="loadCourses()" mat-mini-fab><mat-icon>refresh</mat-icon></button>
+</mat-toolbar>
+<div class="content-wrapper">
+    <div *ngIf="isCurrentTab('apply')">
+        <h2>Available Courses</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let course of unenrolled_courses">
+                <mat-card-header>
+                    <mat-card-subtitle>{{course.professor}}</mat-card-subtitle>
+                    <mat-card-title>{{course.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{course.desc}}
+                    </p>
+                    <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
+                    <span>{{course.start_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="enroll(course.id)">APPLY</button>
+                    <button mat-button>CONTACT</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <button class="add-class" (click)="createClass()" mat-fab><mat-icon>add</mat-icon></button>
+    </div>
+    <div *ngIf="isCurrentTab('current')">
+        <h2>Current Courses</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let course of enrolled_courses">
+                <mat-card-header>
+                    <mat-card-subtitle>{{course.professor}}</mat-card-subtitle>
+                    <mat-card-title>{{course.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{course.desc}}
+                    </p>
+                    <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
+                    <span>{{course.start_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button [routerLink]="['/course/view']" [queryParams]="{ cid: course.id}">OPEN</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="isCurrentTab('schedule')">
+        <h2>Schulede</h2>
+        <div id="schedule" >
+            <div class="calendar-column">
+                <mat-card class="calendar-card">
+                    <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+                </mat-card>
+            </div>
+            <div class="list-column">
+                <h4>Classes</h4>
+                <mat-list *ngFor="let c of enrolled_courses">
+                    <h2>{{c.name}}</h2>
+                    <div *ngFor="let a of c.assignments">
+                        <mat-list-item *ngIf="selectedDate?.toISOString() == a.date.toISOString()">
+                            {{a.name}}
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+            </div>
+        </div>
+    </div>
+</div>

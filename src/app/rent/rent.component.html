@@ -1,0 +1,80 @@
+<mat-toolbar color="primary">
+    Rent
+    <div class="spacer"></div>
+    <mat-chip-listbox aria-label="Renting selection">
+        <mat-chip-option (click)="setTab('room')" selected>Rooms</mat-chip-option>
+        <mat-chip-option (click)="setTab('equipment')">Equipment</mat-chip-option>
+        <mat-chip-option (click)="setTab('catering')">Catering</mat-chip-option>
+    </mat-chip-listbox>
+</mat-toolbar>
+<div class="content-wrapper">
+    <div *ngIf="isCurrentTab('room')">
+        <h2>Rooms</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let room of rooms">
+                <mat-card-header>
+                    <mat-card-subtitle>{{room.desc}}</mat-card-subtitle>
+                    <mat-card-title>{{room.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        <span class="price">PRICE</span><br>{{room.price}}.00$ USD
+                    </p>
+                    
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>RENT</button>
+                    <button mat-button>CONTACT</button>
+                    <div class="spacer"></div>
+                    <span class="stock">{{room.stock}} Left</span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="isCurrentTab('equipment')">
+        <h2>Equipment</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let equipment of equipments">
+                <mat-card-header>
+                    <mat-card-subtitle>{{equipment.desc}}</mat-card-subtitle>
+                    <mat-card-title>{{equipment.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        <span class="price">PRICE</span><br>{{equipment.price}}.00$ USD
+                    </p>
+                    
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>RENT</button>
+                    <button mat-button>CONTACT</button>
+                    <div class="spacer"></div>
+                    <span class="stock">{{equipment.stock}} Left</span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="isCurrentTab('catering')">
+        <h2>Catering</h2>
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let cater of caters">
+                <mat-card-header>
+                    <mat-card-subtitle>{{cater.desc}}</mat-card-subtitle>
+                    <mat-card-title>{{cater.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        <span class="price">PRICE</span><br>{{cater.price}}.00$ USD
+                    </p>
+                    
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>CATER</button>
+                    <button mat-button>CONTACT</button>
+                    <div class="spacer"></div>
+                    <span class="stock">{{cater.stock}} Left</span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
