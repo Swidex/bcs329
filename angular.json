@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bcs329": {
+    "prod": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -81,6 +81,7 @@
           }
         },
         "test": {
+          "builder": "@angular-devkit/build-angular:karma",
           "configurations": {
             "production": {
               "sourceMap": false,
@@ -89,7 +90,6 @@
               "watch": false
             }
           },
-          "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
               "zone.js",
