@@ -1,16 +1,10 @@
 <h2 mat-dialog-title>Create a Course</h2>
 <mat-dialog-content>
     <form [formGroup]="createCourseForm">
-        <div class="form-group">
-            <mat-form-field class="form-full-size" MatFormFieldControl="name" appearance="fill">
-                <mat-label>Course Name</mat-label>
-                <input matInput id="name" formControlName="name">
-            </mat-form-field>
-            <mat-form-field class="form-full-size" MatFormFieldControl="professor" appearance="fill">
-                <mat-label>Professor Name</mat-label>
-                <input matInput id="name" formControlName="professor">
-            </mat-form-field>
-        </div>
+        <mat-form-field class="form-full-size" MatFormFieldControl="name" appearance="fill">
+            <mat-label>Course Name</mat-label>
+            <input matInput id="name" formControlName="name">
+        </mat-form-field>
         <mat-form-field class="form-full-size" MatFormFieldControl="desc" appearance="fill">
             <mat-label>Description</mat-label>
             <textarea matInput id="desc" formControlName="desc"></textarea>

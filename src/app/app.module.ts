@@ -18,14 +18,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
-import { RentComponent } from './rent/rent.component';
+import { RentComponent, RentSelectComponent } from './rent/rent.component';
 import { CourseComponent, CreateCourseComponent } from './course/course.component';
 import { ShuttleComponent } from './shuttle/shuttle.component';
 import { HomecareComponent } from './homecare/homecare.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ViewCourseComponent } from './course/view-course/view-course.component';
+import { AddAssignmentComponent, EditCourseComponent, ViewCourseComponent } from './course/view-course/view-course.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
@@ -40,12 +41,15 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     RentComponent,
+    RentSelectComponent,
     CourseComponent,
     ShuttleComponent,
     HomecareComponent,
     DashboardComponent,
     CreateCourseComponent,
-    ViewCourseComponent
+    ViewCourseComponent,
+    EditCourseComponent,
+    AddAssignmentComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,8 @@ const routes: Routes = [
     MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],

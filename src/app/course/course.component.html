@@ -14,7 +14,7 @@
         <div class="card-container">
             <mat-card class="item-card" *ngFor="let course of unenrolled_courses">
                 <mat-card-header>
-                    <mat-card-subtitle>{{course.professor}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{course.prof.first_name}} {{course.prof.last_name}}</mat-card-subtitle>
                     <mat-card-title>{{course.name}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
@@ -38,7 +38,7 @@
         <div class="card-container">
             <mat-card class="item-card" *ngFor="let course of enrolled_courses">
                 <mat-card-header>
-                    <mat-card-subtitle>{{course.professor}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{course.prof.first_name}} {{course.prof.last_name}}</mat-card-subtitle>
                     <mat-card-title>{{course.name}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, Assignment } from '../course';
+import { Course, Assignment, User } from '../dataTypes';
+import { Users } from '../mock-users';
 import { Courses  } from '../mock-courses';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-course',
@@ -16,6 +18,7 @@ export class CourseComponent implements OnInit {
   enrolled_courses: Course[] = [];
   assignments: Assignment[] = [];
   selectedDate: Date | null = new Date();
+  user: User = new User(-1);
 
   // apply-current-schedule
   tabs = ["apply","current","schedule"]
@@ -23,7 +26,8 @@ export class CourseComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
     ) {}
   
   setTab(tab: string) {
@@ -38,19 +42,15 @@ export class CourseComponent implements OnInit {
   }
 
   enroll(id: number) {
-    console.log("Enrolling in class...");
-    for (let Course of Courses) {
-      if (Course.id == id) {
-        if (Course.enrolled == true) {
-          // already enrolled
-          throw new Error("Already enrolled in " + Course.name + "!");
-        } else {
-          Course.enrolled = true;
-          this.loadCourses();
-        }
+    for (let s of Courses[id].students!) {
+      if (s.id == this.user.id) {
+        console.log("Already enrolled in the class!");
+        break;
       }
     }
-    console.log("Failed to find class.");
+    this._snackBar.open("You have enrolled in " + Courses[id].name + ".", undefined, {duration: 3600});
+    Courses[id].students?.push(this.user);
+    this.loadCourses();
   }
 
   createClass() {
@@ -66,21 +66,35 @@ export class CourseComponent implements OnInit {
     this.unenrolled_courses = [];
     this.enrolled_courses = [];
     for (let Course of Courses) {
-      if (Course.enrolled != true) {
-        this.unenrolled_courses.push(Course);
-      } else {
-        this.enrolled_courses.push(Course);
+      var found: boolean = false;
+      for (let student of Course.students!) {
+        if (student.id == this.user.id) {
+          this.enrolled_courses.push(Course);
+          found = true;
+          break;
+        }
       }
+      if (!found) {this.unenrolled_courses.push(Course);}
     }
   }
 
   ngOnInit(): void {
+
+    // grab url parameters
     this.route.queryParams
       .subscribe((params: { [x: string]: string; }) => {
         if (this.tabs.indexOf(params['tab']) > -1) {
           this.currentTab = params['tab'];
         }
     })
+
+    // load user information
+    const uid: string | null = localStorage.getItem('userId');
+    if (uid != null) {
+      this.user = Users[Number(uid)];
+    }
+    
+    // load courses
     this.loadCourses();
   }
 }
@@ -90,7 +104,9 @@ export class CourseComponent implements OnInit {
   templateUrl: './create-course.component.html',
   styleUrls: ['./course.component.scss']
 })
-export class CreateCourseComponent{
+export class CreateCourseComponent implements OnInit{
+
+  user: User = new User(-1);
 
   createCourseForm = this.formBuilder.group({
     name: '',
@@ -101,19 +117,29 @@ export class CreateCourseComponent{
     end_date: new Date()
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private router: Router, private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    // load user information
+    const uid: string | null = localStorage.getItem('userId');
+    if (uid != null) {
+      this.user = Users[Number(uid)];
+    }
+  }
 
   onSubmit() {
+    var cid: number = Courses.length;
     Courses.push(new Course(
-      Courses.length - 1,
+      cid,
       this.createCourseForm.value.name!,
-      this.createCourseForm.value.professor!,
+      this.user,
       this.createCourseForm.value.desc!,
       this.createCourseForm.value.start_date!,
       this.createCourseForm.value.end_date!,
-      true,
+      [this.user],
       this.createCourseForm.value.requirements!
     ));
+    this.router.navigate(['/course/view'],{queryParams: {cid: cid}});
   }
 
 }
