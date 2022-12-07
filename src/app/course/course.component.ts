@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-course',
@@ -33,26 +34,26 @@ export class CourseComponent implements OnInit {
   setTab(tab: string) {
     this.currentTab = tab;
   }
-
   isCurrentTab(tab: string) {
     if (tab == this.currentTab) {
       return true;
     }
     return false;
   }
-
-  enroll(id: number) {
-    for (let s of Courses[id].students!) {
+  enroll(courseId: number) {
+    console.log(courseId + " - " + Courses[courseId].name);
+    for (let s of Courses[courseId].students!) {
       if (s.id == this.user.id) {
-        console.log("Already enrolled in the class!");
-        break;
+        this._snackBar.open("You are already enrolled!", undefined, {duration: 3600});
+        this.loadCourses();
+        return 1;
       }
     }
-    this._snackBar.open("You have enrolled in " + Courses[id].name + ".", undefined, {duration: 3600});
-    Courses[id].students?.push(this.user);
+    this._snackBar.open("You have enrolled in " + Courses[courseId].name + ".", undefined, {duration: 3600});
+    Courses[courseId].students?.push(this.user);
     this.loadCourses();
+    return 0;
   }
-
   createClass() {
     const dialogRef = this.dialog.open(CreateCourseComponent);
 
@@ -61,12 +62,12 @@ export class CourseComponent implements OnInit {
       this.loadCourses();
     });
   }
-
   loadCourses(): void {
     this.unenrolled_courses = [];
     this.enrolled_courses = [];
     for (let Course of Courses) {
       var found: boolean = false;
+      if (!Course.students) { continue; }
       for (let student of Course.students!) {
         if (student.id == this.user.id) {
           this.enrolled_courses.push(Course);
@@ -77,7 +78,6 @@ export class CourseComponent implements OnInit {
       if (!found) {this.unenrolled_courses.push(Course);}
     }
   }
-
   ngOnInit(): void {
 
     // grab url parameters
@@ -89,7 +89,7 @@ export class CourseComponent implements OnInit {
     })
 
     // load user information
-    const uid: string | null = localStorage.getItem('userId');
+    const uid: string | null = localStorage.getItem('token');
     if (uid != null) {
       this.user = Users[Number(uid)];
     }
@@ -117,14 +117,10 @@ export class CreateCourseComponent implements OnInit{
     end_date: new Date()
   });
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
-    // load user information
-    const uid: string | null = localStorage.getItem('userId');
-    if (uid != null) {
-      this.user = Users[Number(uid)];
-    }
+    this.user = this.authService.getUserData();
   }
 
   onSubmit() {

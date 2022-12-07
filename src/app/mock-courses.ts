@@ -3,6 +3,9 @@ import { Users } from "./mock-users";
 
 export const Courses: Course[] = [
     {
+        id: 0
+    },
+    {
         id: 1,
         name: "COMS 329",
         prof: Users[2],
@@ -55,7 +58,7 @@ export const Courses: Course[] = [
         ]
     },
     {
-        id: 2,
+        id: 3,
         name: "COMS 310",
         prof: Users[4],
         desc: "Vitae elementum curabitur vitae nunc sed velit dignissim. Ultricies mi quis hendrerit dolor magna eget est lorem ipsum.",
@@ -77,7 +80,7 @@ export const Courses: Course[] = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         name: "COMS 252",
         prof: Users[5],
         desc: "Elit ullamcorper dignissim cras tincidunt lobortis. Non odio euismod lacinia at quis risus sed. Faucibus a pellentesque sit amet porttitor eget.",
@@ -98,13 +101,13 @@ export const Courses: Course[] = [
         ]
     },
     {
-        id: 4,
+        id: 5,
         name: "TEST 101",
         prof: Users[1],
         desc: "N/A",
         start_date: new Date("8/20/22"),
         end_date: new Date("12/16/22"),
-        students: [Users[0]],
+        students: [Users[1]],
         assignments: []
     }
 ]

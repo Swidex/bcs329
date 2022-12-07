@@ -7,9 +7,8 @@
     </mat-chip-listbox>
     <button style="margin-left:10px;" mat-mini-fab><mat-icon>refresh</mat-icon></button>
 </mat-toolbar>
-<div class="content-wrapper">
-    <div>
-        <h2>{{currentFilter}}</h2>
+<div class="outer-container">
+    <div class="inner-container">
         <div class="card-container">
             <mat-card class="item-card" *ngFor="let ride of filtered_rides">
                 <mat-card-header>
@@ -23,7 +22,7 @@
                     <button mat-button>JOIN</button>
                 </mat-card-actions>
             </mat-card>
+            <button *ngIf="currentFilter=='Carpools'" class="fab-button" (click)="createCarpool()" mat-fab><mat-icon>add</mat-icon></button>
         </div>
-        <button *ngIf="currentFilter=='Carpools'" class="add-class" (click)="createCarpool()" mat-fab><mat-icon>add</mat-icon></button>
     </div>
 </div>

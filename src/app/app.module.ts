@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
@@ -26,24 +27,11 @@ import { RentComponent, RentSelectComponent } from './rent/rent.component';
 import { CourseComponent, CreateCourseComponent } from './course/course.component';
 import { ShuttleComponent } from './shuttle/shuttle.component';
 import { HomecareComponent } from './homecare/homecare.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddAssignmentComponent, EditCourseComponent, ViewCourseComponent } from './course/view-course/view-course.component';
-import { AccountComponent } from './account/account.component';
-import { LoginComponent } from './account/login/login.component';
-import { RegisterComponent } from './account/register/register.component';
-import { User } from './dataTypes';
-
-const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'account', component: AccountComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'rent', component: RentComponent},
-  { path: 'course', component: CourseComponent},
-  { path: 'course/view', component: ViewCourseComponent},
-  { path: 'shuttle', component: ShuttleComponent},
-  { path: 'homecare', component: HomecareComponent}
-];
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { routes } from './app.routes';
+import { ProfileComponent } from './auth/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -53,14 +41,13 @@ const routes: Routes = [
     CourseComponent,
     ShuttleComponent,
     HomecareComponent,
-    DashboardComponent,
     CreateCourseComponent,
     ViewCourseComponent,
     EditCourseComponent,
     AddAssignmentComponent,
-    AccountComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +55,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+
+    // MATERIAL MODULES
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
@@ -85,7 +74,11 @@ const routes: Routes = [
     MatSnackBarModule,
     MatRippleModule,
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })

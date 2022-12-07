@@ -4,14 +4,13 @@
   </button>
   <span>Best Community Service</span>
   <span class="spacer"></span>
-  <button mat-stroked-button routerLink="/account">
-    <span>{{user.first_name}}</span>
+  <button mat-button color="primary" routerLink="/profile">
     <mat-icon>person</mat-icon>
   </button>
 </mat-toolbar>
 
 <mat-drawer-container>
-  <mat-drawer #drawer mode="side" opened>
+  <mat-drawer #drawer mode="side" closed>
     <mat-nav-list class="item-list">
       <a *ngFor="let p of pages" class="item-link" mat-list-item routerLink={{p.link}}>
         <span class="item-text">{{p.name}}</span>

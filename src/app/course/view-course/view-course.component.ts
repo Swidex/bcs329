@@ -35,9 +35,9 @@ export class ViewCourseComponent implements OnInit {
     ) {}
 
   leaveCourse(): void {
-    var index = this.course.students.indexOf(this.user);
-    if (index > -1) {
-      this.course.students.splice(index, 1);
+    var index = this.course.students?.indexOf(this.user);
+    if (index && index > -1) {
+      this.course.students?.splice(index, 1);
     }
     this._snackBar.open("You have left " + this.course.name + ".", undefined, {duration: 3600});
     this.router.navigate(['/course']);
@@ -76,13 +76,7 @@ export class ViewCourseComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-        if (Courses[params['cid']].students.indexOf(this.user) > -1) {
           this.course = Courses[params['cid']];
-        } else {
-          // bad permissions
-          this._snackBar.open("You do not have permissions to view this page!", undefined, {duration: 3600});
-          this.router.navigate(['/course']);
-        }
     })
   }
 
@@ -115,11 +109,11 @@ export class EditCourseComponent implements OnInit {
     // load course info into form
     this.course = Courses[this.data.courseId];
     this.editCourseForm = this.formBuilder.group({
-      name: this.course.name,
-      desc: this.course.desc,
+      name: this.course.name!,
+      desc: this.course.desc!,
       requirements: this.course.requirements!,
-      start_date: this.course.start_date,
-      end_date: this.course.end_date
+      start_date: this.course.start_date!,
+      end_date: this.course.end_date!
     });
   }
 
@@ -163,7 +157,7 @@ export class AddAssignmentComponent implements OnInit {
   onSubmit(): void {
     this.course.assignments?.push(new Assignment(
       this.addAssignmentForm.value.name!,
-      this.course.name,
+      this.course.name!,
       this.addAssignmentForm.value.date!,
       this.addAssignmentForm.value.description!
     ));

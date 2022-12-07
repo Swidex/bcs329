@@ -1,0 +1,34 @@
+<div class="outer-container">
+    <button class="corner-btn" (click)="authService.logout()" routerLink="/login" mat-button color="accent">
+        <span>Log Out</span><mat-icon>logout</mat-icon> 
+    </button>
+    <div class="inner-container">
+        <div class="asf">
+            <h1 style="color: white;">
+                Welcome, {{user.first_name}}!
+            </h1>
+            <div class="card-container">
+                <mat-card matRipple class="full-card">
+                    <mat-icon>attach_money</mat-icon>
+                    <span>Payment Settings</span>
+                </mat-card>
+                <mat-card matRipple class="full-card">
+                    <mat-icon>person</mat-icon>
+                    <span>Profile Settings</span>
+                </mat-card>
+                <mat-card matRipple class="full-card">
+                    <mat-icon>lock</mat-icon>
+                    <span>Security Settings</span>
+                </mat-card>
+                <mat-card matRipple class="full-card">
+                    <mat-icon>tune</mat-icon>
+                    <span>App Settings</span>
+                </mat-card>
+                <mat-card matRipple class="full-card">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete Account</span>
+                </mat-card>
+            </div>
+        <div>
+    </div>
+</div>

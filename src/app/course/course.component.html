@@ -8,13 +8,12 @@
     </mat-chip-listbox>
     <button style="margin-left:10px;" (click)="loadCourses()" mat-mini-fab><mat-icon>refresh</mat-icon></button>
 </mat-toolbar>
-<div class="content-wrapper">
-    <div *ngIf="isCurrentTab('apply')">
-        <h2>Available Courses</h2>
-        <div class="card-container">
+<div class="outer-container">
+    <div class="inner-container">
+        <div class="card-container" *ngIf="isCurrentTab('apply')">
             <mat-card class="item-card" *ngFor="let course of unenrolled_courses">
                 <mat-card-header>
-                    <mat-card-subtitle>{{course.prof.first_name}} {{course.prof.last_name}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{course.prof!.first_name}} {{course.prof!.last_name}}</mat-card-subtitle>
                     <mat-card-title>{{course.name}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
@@ -22,23 +21,20 @@
                         {{course.desc}}
                     </p>
                     <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
-                    <span>{{course.start_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
-                    <span>{{course.end_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                    <span>{{course.start_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-button (click)="enroll(course.id)">APPLY</button>
                     <button mat-button>CONTACT</button>
                 </mat-card-actions>
             </mat-card>
-        </div>
-        <button class="add-class" (click)="createClass()" mat-fab><mat-icon>add</mat-icon></button>
-    </div>
-    <div *ngIf="isCurrentTab('current')">
-        <h2>Current Courses</h2>
-        <div class="card-container">
+            <button class="fab-button" (click)="createClass()" mat-fab><mat-icon>add</mat-icon></button>
+        </div>  
+        <div class="card-container" *ngIf="isCurrentTab('current')">
             <mat-card class="item-card" *ngFor="let course of enrolled_courses">
                 <mat-card-header>
-                    <mat-card-subtitle>{{course.prof.first_name}} {{course.prof.last_name}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{course.prof!.first_name}} {{course.prof!.last_name}}</mat-card-subtitle>
                     <mat-card-title>{{course.name}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
@@ -46,34 +42,29 @@
                         {{course.desc}}
                     </p>
                     <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
-                    <span>{{course.start_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
-                    <span>{{course.end_date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                    <span>{{course.start_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-button [routerLink]="['/course/view']" [queryParams]="{ cid: course.id}">OPEN</button>
                 </mat-card-actions>
             </mat-card>
         </div>
-    </div>
-    <div *ngIf="isCurrentTab('schedule')">
-        <h2>Schulede</h2>
-        <div id="schedule" >
-            <div class="calendar-column">
-                <mat-card class="calendar-card">
-                    <mat-calendar [(selected)]="selectedDate"></mat-calendar>
-                </mat-card>
-            </div>
-            <div class="list-column">
-                <h4>Classes</h4>
-                <mat-list *ngFor="let c of enrolled_courses">
-                    <h2>{{c.name}}</h2>
-                    <div *ngFor="let a of c.assignments">
+        <div class="card-container" *ngIf="isCurrentTab('schedule')">
+            <mat-card class="item-card" >
+                <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+            </mat-card>
+            
+            <mat-card class="item-card" *ngFor="let c of enrolled_courses">
+                <mat-card-header>{{c.name}}</mat-card-header>
+                <mat-card-content>
+                    <mat-list *ngFor="let a of c.assignments">
                         <mat-list-item *ngIf="selectedDate?.toISOString() == a.date.toISOString()">
                             {{a.name}}
                         </mat-list-item>
-                    </div>
-                </mat-list>
-            </div>
+                     </mat-list>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>

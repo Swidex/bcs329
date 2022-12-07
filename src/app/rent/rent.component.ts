@@ -28,20 +28,6 @@ export class RentComponent implements OnInit {
   setFilter(filter: string) {
     this.currentFilter = filter;
   }
-
-  openRentMenu(rid: number) {
-    const dialogRef = this.dialog.open(RentSelectComponent, {
-      data: {
-        rentableId: rid
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this._snackBar.open("Purchase successful.", undefined, {duration: 3600});
-    });
-  }
-
   loadRentables(newFilter?:string): void {
     this.filtered_rentables = [];
     if (newFilter != null && this.filters.indexOf(newFilter) > -1) {
@@ -53,13 +39,24 @@ export class RentComponent implements OnInit {
       }
     }
   }
-
   ngOnInit(): void {
     // grab url parameters
     this.route.queryParams
       .subscribe((params: { [x: string]: string; }) => {
         this.loadRentables(params['filter']);
     })
+  }
+  openRentMenu(rid: number) {
+    const dialogRef = this.dialog.open(RentSelectComponent, {
+      data: {
+        rentableId: rid
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this._snackBar.open("Purchase successful.", undefined, {duration: 3600});
+    });
   }
 }
 

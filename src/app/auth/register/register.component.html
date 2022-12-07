@@ -1,0 +1,34 @@
+<div class="outer-container">
+    <button class="corner-btn" mat-button color="accent" routerLink="/login">
+        <span>Back</span><mat-icon>chevron_left</mat-icon> 
+    </button>
+    <div class="inner-container">
+        <form [formGroup]="registerForm">
+            <h1>
+                Best Community Service
+            </h1>
+            <h2>
+                Register
+            </h2>
+            <mat-form-field MatFormFieldControl="email" color="accent" appearance="outline">
+                <mat-label>Email Address</mat-label>
+                <input matInput id="email" formControlName="email" type="email">
+            </mat-form-field>
+            <mat-form-field MatFormFieldControl="first_name" color="accent" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput id="first_name" formControlName="first_name" type="first_name">
+            </mat-form-field>
+            <mat-form-field MatFormFieldControl="last_name" color="accent" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput id="last_name" formControlName="last_name" type="last_name">
+            </mat-form-field>
+            <mat-form-field MatFormFieldControl="password" color="accent"  appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput id="password" formControlName="password" type="password">
+            </mat-form-field>
+            <button class="fw-btn" mat-flat-button color="accent" type="submit" (click)="onSubmit()">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
