@@ -1,10 +1,6 @@
-<h2 mat-dialog-title>Rent {{rentable.type}} - {{rentable.name}}</h2>
+<h2 mat-dialog-title>Request {{activity.name}}</h2>
 <mat-dialog-content>
-    <form [formGroup]="rentSelectForm">
-        <mat-form-field class="form-element form-field-100" MatFormFieldControl="quantity" appearance="fill">
-            <mat-label>Quantity</mat-label>
-            <input matInput id="quantity" formControlName="quantity">
-        </mat-form-field>
+    <form [formGroup]="homecareSelectForm">
         <div class="form-field-100">
             <mat-form-field class="form-element form-field-50" MatFormFieldControl="start_date" appearance="fill">
                 <mat-label>Rent Date</mat-label>
@@ -12,14 +8,15 @@
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="start_picker"></mat-datepicker-toggle>
                 <mat-datepicker #start_picker></mat-datepicker>
-            </mat-form-field>  
-            <mat-form-field class="form-element form-field-50" MatFormFieldControl="end_date" appearance="fill">
-                <mat-label>Return Date</mat-label>
-                <input matInput [matDatepicker]="end_picker" formControlName="end_date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="end_picker"></mat-datepicker-toggle>
-                <mat-datepicker #end_picker></mat-datepicker>
-            </mat-form-field>  
+            </mat-form-field>
+            <mat-form-field class="form-element form-field-25" MatFormFieldControl="time" appearance="fill">
+                <mat-label>Time</mat-label>
+                <input matInput id="time" formControlName="time">
+            </mat-form-field>
+            <mat-form-field class="form-element form-field-25" MatFormFieldControl="duration" appearance="fill">
+                <mat-label>Duration</mat-label>
+                <input matInput id="duration" formControlName="duration">
+            </mat-form-field>
         </div>
         <div class="form-field-100">
             <mat-form-field class="form-element form-field-75" MatFormFieldControl="ccn" appearance="fill">
@@ -33,7 +30,7 @@
         </div>
         <mat-dialog-actions align="end">
             <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button [disabled]="rentSelectForm.invalid" (click)="onSubmit()" type="submit">Rent</button>
+            <button mat-button [disabled]="homecareSelectForm.invalid" (click)="onSubmit()" type="submit">Request</button>
         </mat-dialog-actions>
     </form>
 </mat-dialog-content>

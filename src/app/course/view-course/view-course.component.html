@@ -1,42 +1,44 @@
 <mat-toolbar color="primary">
-    <button mat-mini-fab [routerLink]="['/course']" [queryParams]="{tab: 'current'}"><mat-icon>chevron_left</mat-icon></button>
+    <button mat-icon-button [routerLink]="['/course']" [queryParams]="{tab: 'current'}"><mat-icon>chevron_left</mat-icon></button>
     <span style="margin-left:.75rem;">Class Information</span>
 </mat-toolbar>
-<div class="content-wrapper">
-    <div class="card-container">
-        <mat-card class="item-card">
-            <mat-card-header>
-                <mat-card-subtitle>{{course.prof!.first_name}} {{course.prof!.last_name}}</mat-card-subtitle>
-                <mat-card-title>{{course.name}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    {{course.desc}}
-                </p>
-                <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
-                <span>{{course.start_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
-                <span>{{course.end_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="leaveCourse()">LEAVE</button>
-            </mat-card-actions>
-        </mat-card>
-        <mat-card class="item-card" *ngFor="let a of course.assignments">
-            <mat-card-header>
-                <mat-card-subtitle>Assignment</mat-card-subtitle>
-                <mat-card-title>{{a.name}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    {{a.description}}
-                </p>
-                <span style="font-size: .75rem; font-weight: 700;">DUE</span><br>
-                {{a.date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}
-            </mat-card-content>
-        </mat-card>
+<div class="outer-container">
+    <div class="inner-container">
+        <div class="card-container">
+            <mat-card class="item-card">
+                <mat-card-header>
+                    <mat-card-subtitle>{{course.prof!.first_name}} {{course.prof!.last_name}}</mat-card-subtitle>
+                    <mat-card-title>{{course.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{course.desc}}
+                    </p>
+                    <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
+                    <span>{{course.start_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="leaveCourse()">LEAVE</button>
+                </mat-card-actions>
+            </mat-card>
+            <mat-card class="item-card" *ngFor="let a of course.assignments">
+                <mat-card-header>
+                    <mat-card-subtitle>Assignment</mat-card-subtitle>
+                    <mat-card-title>{{a.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{a.description}}
+                    </p>
+                    <span style="font-size: .75rem; font-weight: 700;">DUE</span><br>
+                    {{a.date.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
 </div>
-<div *ngIf="course.prof!.id == user.id" class="add-class">
-    <button (click)="editCourse(course.id)" mat-fab><mat-icon>edit</mat-icon></button>
-    <button (click)="addAssignment(course.id)" style="margin-left: .75rem;" mat-fab><mat-icon>add</mat-icon></button>
+<div *ngIf="course.prof!.id == user.id" class="fab-button">
+    <button (click)="editCourse()" mat-fab><mat-icon>edit</mat-icon></button>
+    <button (click)="addAssignment()" style="margin-left: .75rem;" mat-fab><mat-icon>add</mat-icon></button>
 </div>

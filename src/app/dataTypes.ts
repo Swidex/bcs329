@@ -15,6 +15,7 @@ export class User {
         public email?: string,
         public password?: string,
         public rental?: Rentable[],
+        public activity?: Activity[],
     ) {}
 }
 
@@ -37,10 +38,10 @@ export class Rentable {
 
     constructor(
         public id: number,
-        public type: string,
-        public name: string,
-        public desc: string,
-        public price: number,
+        public type?: string,
+        public name?: string,
+        public desc?: string,
+        public price?: number,
         public quantity?: number,
         public start_date?: Date,
         public end_date?: Date,
@@ -48,16 +49,43 @@ export class Rentable {
     
 }
 
-export class Ride {
+export class Shuttle {
 
     constructor(
         public id: number,
         public name?: string,
-        public type?: string,
         public destination?: string,
         public time?: Date,
-        public leader?: User,
+    ) {}
+
+}
+
+export class Carpool {
+
+    constructor(
+        public id: number,
+        public group_name?: string,
+        public destination?: string,
+        public time?: Date,
+        public status?: string,
+        public owner?: User,
         public members?: User[],
+    ) {}
+
+}
+
+export class Activity {
+
+    constructor(
+        // Server Data
+        public id: number,
+        public name?: string,
+        public tags?: string[],
+        public fee?: string,
+
+        // Client Data
+        public start_date?: Date,
+        public duration?: number,
     ) {}
 
 }

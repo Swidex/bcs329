@@ -2,10 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Rentable, User } from '../dataTypes';
 import { Rentables } from '../mock-rentables';
 import { Users } from '../mock-users';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder } from '@angular/forms';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-rent',
@@ -14,16 +15,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RentComponent implements OnInit {
 
-  filtered_rentables: Rentable[] = [];
-  // rooms-equipment-catering
+  user: User;
+  filtered_rentables: Rentable[];
   filters = ["Room","Equipment","Cater"]
   currentFilter = "Room";
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.user = authService.getUserData();
+    this.filtered_rentables = [];
+  }
 
   setFilter(filter: string) {
     this.currentFilter = filter;
@@ -39,12 +44,29 @@ export class RentComponent implements OnInit {
       }
     }
   }
+  hasRented(rentableId: number): boolean {
+    if (!this.user.rental) return false;
+    for (let r of this.user.rental) {
+      if (r.id == rentableId) return true;
+    }
+    return false;
+  }
   ngOnInit(): void {
     // grab url parameters
     this.route.queryParams
       .subscribe((params: { [x: string]: string; }) => {
         this.loadRentables(params['filter']);
     })
+  }
+  cancelRental(rid: number) {
+    var index = 0;
+    for (let a of this.user.rental!) {
+      if (a.id == rid) {
+        this.user.rental?.splice(index, 1);
+        break
+      }
+      index++;
+    }
   }
   openRentMenu(rid: number) {
     const dialogRef = this.dialog.open(RentSelectComponent, {
@@ -54,8 +76,14 @@ export class RentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this._snackBar.open("Purchase successful.", undefined, {duration: 3600});
+      var msg: string;
+      if (result) {
+        this.user.rental!.push(result.data);
+        msg = "Purchase rental for " + result.data.type + " (" + result.data.name + ", " + result.data.price + "$) successful!";
+      } else {
+        msg = "Purchase canceled."
+      }
+      this._snackBar.open(msg , "Dismiss", {duration: 3600});
     });
   }
 }
@@ -67,46 +95,44 @@ export class RentComponent implements OnInit {
 })
 export class RentSelectComponent implements OnInit {
 
-  user: User = new User(-1);
-  rentable: Rentable = new Rentable(0, "", "", "", 0, 0);
-
-  rentSelectForm = this.formBuilder.group({
-    quantity: 0,
-    start_date: new Date(),
-    end_date: new Date(),
-    ccn: 0,
-    cvv: 0,
-  });
-
+  user: User;
+  rentable: Rentable;
+  rentSelectForm: FormGroup;
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<RentSelectComponent>,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder
-  ) {}
+    formBuilder: FormBuilder,
+    authService: AuthService,
+  ) {
+    this.user = authService.getUserData();
+    this.rentable = new Rentable(0, "", "", "", 0, 0);
+    this.rentSelectForm = formBuilder.group({
+      quantity: [undefined, Validators.required],
+      start_date: [undefined, Validators.required],
+      end_date: [undefined, Validators.required],
+      ccn: [undefined, Validators.required],
+      cvv: [undefined, Validators.required],
+    });
+  }
 
   ngOnInit(): void {
-    // grab rentable info
     this.rentable = Rentables[this.data.rentableId];
-
-    // load user information
-    const uid: string | null = localStorage.getItem('userId');
-    if (uid != null) {
-      this.user = Users[Number(uid)];
-    }
   }
 
   onSubmit(): void {
-    this.user.rental?.push(new Rentable(
-      this.rentable.id,
-      this.rentable.name,
-      this.rentable.type,
-      this.rentable.desc,
-      this.rentable.price,
-      this.rentSelectForm.value.quantity!,
-      this.rentSelectForm.value.start_date!,
-      this.rentSelectForm.value.end_date!,
-    ));
-    
+    this.dialogRef.close(
+      { data: new Rentable(
+          this.rentable.id,
+          this.rentable.type,
+          this.rentable.name,
+          this.rentable.desc,
+          this.rentable.price,
+          this.rentSelectForm.value.quantity,
+          this.rentSelectForm.value.start_date,
+          this.rentSelectForm.value.end_date,
+      )}
+    );
   }
-  
 }

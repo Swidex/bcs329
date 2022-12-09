@@ -21,25 +21,32 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRippleModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { RentComponent, RentSelectComponent } from './rent/rent.component';
-import { CourseComponent, CreateCourseComponent } from './course/course.component';
-import { ShuttleComponent } from './shuttle/shuttle.component';
-import { HomecareComponent } from './homecare/homecare.component';
+import { HomecareComponent, HomecareSelectComponent } from './homecare/homecare.component';
 import { AddAssignmentComponent, EditCourseComponent, ViewCourseComponent } from './course/view-course/view-course.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { routes } from './app.routes';
 import { ProfileComponent } from './auth/profile/profile.component';
+import { DonationComponent } from './donation/donation.component';
+import { AvailableCoursesComponent, CreateCourseComponent } from './course/available-courses/available-courses.component';
+import { CurrentCoursesComponent } from './course/current-courses/current-courses.component';
+import { ScheduleComponent } from './course/schedule/schedule.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ShuttleComponent } from './transportation/shuttle/shuttle.component';
+import { CarpoolComponent, CreateCarpoolComponent } from './transportation/carpool/carpool.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RentComponent,
     RentSelectComponent,
-    CourseComponent,
-    ShuttleComponent,
+    HomecareSelectComponent,
     HomecareComponent,
     CreateCourseComponent,
     ViewCourseComponent,
@@ -48,6 +55,14 @@ import { ProfileComponent } from './auth/profile/profile.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    DonationComponent,
+    AvailableCoursesComponent,
+    CurrentCoursesComponent,
+    ScheduleComponent,
+    DashboardComponent,
+    ShuttleComponent,
+    CarpoolComponent,
+    CreateCarpoolComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +74,7 @@ import { ProfileComponent } from './auth/profile/profile.component';
     // MATERIAL MODULES
     MatCardModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatDividerModule,
     MatSidenavModule,
     MatIconModule,
@@ -73,6 +89,8 @@ import { ProfileComponent } from './auth/profile/profile.component';
     MatNativeDateModule,
     MatSnackBarModule,
     MatRippleModule,
+    MatMenuModule,
+    MatRadioModule
   ],
   providers: [
     MatDatepickerModule,

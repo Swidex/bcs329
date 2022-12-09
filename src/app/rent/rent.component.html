@@ -17,15 +17,13 @@
                 </mat-card-header>
                 <mat-card-content>
                     <p>
-                        <span class="price">PRICE</span><br>{{Rentable.price}}.00$ USD
+                        {{Rentable.price}}.00$ USD
                     </p>
                     
                 </mat-card-content>
                 <mat-card-actions>
-                    <button (click)="openRentMenu(Rentable.id)" mat-button>RENT</button>
-                    <button mat-button>CONTACT</button>
-                    <div class="spacer"></div>
-                    <span class="quantity">{{Rentable.quantity}} Left</span>
+                    <button [disabled]="hasRented(Rentable.id)" (click)="openRentMenu(Rentable.id)" mat-button>RENT</button>
+                    <div class="spacer"></div><button *ngIf="hasRented(Rentable.id)" (click)="cancelRental(Rentable.id)" mat-button>EDIT RENTAL</button>
                 </mat-card-actions>
             </mat-card>
         </div>

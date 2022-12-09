@@ -4,9 +4,19 @@
   </button>
   <span>Best Community Service</span>
   <span class="spacer"></span>
-  <button mat-button color="primary" routerLink="/profile">
+  <button *ngIf="authService.isLoggedIn()" mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>person</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="authService.logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Log Out</span>
+    </button>
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-drawer-container>

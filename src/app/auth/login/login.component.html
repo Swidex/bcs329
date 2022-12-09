@@ -1,15 +1,9 @@
 <div class="outer-container">
-    <button class="corner-btn" routerLink="/shuttle" mat-button color="accent">
-        <span>Skip</span><mat-icon>chevron_right</mat-icon> 
-    </button>
     <div class="inner-container">
         <form [formGroup]="form">
             <h1>
-                Best Community Service
-            </h1>
-            <h2>
                 Log In
-            </h2>
+            </h1>
 
             <mat-form-field MatFormFieldControl="email" color="accent" appearance="outline">
                 <mat-label>Email Address</mat-label>
@@ -20,14 +14,14 @@
                 <input matInput id="password" formControlName="password" type="password">
             </mat-form-field>
 
-            <button class="fw-btn" mat-flat-button color="accent" type="submit" (click)="login()">
+            <button class="fw-btn" [disabled]="form.invalid" mat-flat-button color="primary" type="submit" (click)="login()">
                 Log In
             </button>
             
-            <button class="fw-btn" mat-stroked-button color="accent">
+            <button class="fw-btn" mat-flat-button color="accent">
                 Forgot Password
             </button>
-            <button class="fw-btn" mat-button color="accent" routerLink="/register">
+            <button class="fw-btn" mat-stroked-button color="accent" routerLink="/register">
                 Register
             </button>
         </form>

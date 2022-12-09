@@ -1,38 +1,35 @@
-import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Assignment, Course, User } from 'src/app/dataTypes';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Users } from '../../mock-users';
 import { Courses } from 'src/app/mock-courses';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { createInjectableType } from '@angular/compiler';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-view-course',
   templateUrl: './view-course.component.html',
   styleUrls: ['./view-course.component.scss']
 })
-export class ViewCourseComponent implements OnInit {
+export class ViewCourseComponent {
 
-  user: User = new User(0);
-  cid: number = 0;
-  course: Course = new Course(
-    0,
-    "",
-    new User(-1),
-    "",
-    new Date(),
-    new Date(),
-    []
-  );
+  user: User;
+  course!: Course;
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private _snackBar: MatSnackBar
-    ) {}
+    private _snackBar: MatSnackBar,
+    authService: AuthService,
+    ) {
+      this.user = authService.getUserData();
+      this.route.queryParams
+        .subscribe(params => {
+            this.course = Courses[params['cid']];
+      })
+    }
 
   leaveCourse(): void {
     var index = this.course.students?.indexOf(this.user);
@@ -43,41 +40,33 @@ export class ViewCourseComponent implements OnInit {
     this.router.navigate(['/course']);
   }
 
-  editCourse(cid: number): void {
+  editCourse(): void {
     const dialogRef = this.dialog.open(EditCourseComponent, {
       data: {
-        courseId: cid
+        courseId: this.course.id
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this._snackBar.open("Edited class", undefined, {duration: 3600});
+      } else {
+        this._snackBar.open("Canceled edit", undefined, {duration: 3600});
+      }
+      
     });
   }
 
-  addAssignment(cid: number): void {
+  addAssignment(): void {
     const dialogRef = this.dialog.open(AddAssignmentComponent, {
       data: {
-        courseId: cid
+        courseId: this.course.id
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  ngOnInit(): void {
-    // load user information
-    const uid: string | null = localStorage.getItem('userId');
-    if (uid != null) {
-      this.user = Users[Number(uid)];
-    }
-
-    this.route.queryParams
-      .subscribe(params => {
-          this.course = Courses[params['cid']];
-    })
   }
 
 }
@@ -87,44 +76,31 @@ export class ViewCourseComponent implements OnInit {
   templateUrl: './edit-course.component.html',
   styleUrls: ['./view-course.component.scss']
 })
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent {
 
-  course: Course = new Course(0, "", new User(-1), "", new Date(), new Date(), [], "", []);
-
-  editCourseForm = this.formBuilder.group({
-    name: '',
-    desc: "",
-    requirements: '',
-    start_date: new Date(),
-    end_date: new Date()
-  });
+  course!: Course;
+  editCourseForm: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder) {}
+    formBuilder: FormBuilder) {
+      this.course = Courses[this.data.courseId];
+      this.editCourseForm = formBuilder.group({
+        name: [this.course.name, Validators.required],
+        desc: [this.course.desc, Validators.required],
+        requirements: this.course.requirements,
+        start_date: [this.course.start_date, Validators.required],
+        end_date: [this.course.end_date, Validators.required],
+      });
+    }
 
-  ngOnInit(): void {
-    // load course info into form
-    this.course = Courses[this.data.courseId];
-    this.editCourseForm = this.formBuilder.group({
-      name: this.course.name!,
-      desc: this.course.desc!,
-      requirements: this.course.requirements!,
-      start_date: this.course.start_date!,
-      end_date: this.course.end_date!
-    });
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     this.course.name = this.editCourseForm.value.name!;
     this.course.desc = this.editCourseForm.value.desc!;
     this.course.requirements = this.editCourseForm.value.requirements!;
     this.course.start_date = this.editCourseForm.value.start_date!;
     this.course.end_date = this.editCourseForm.value.end_date!;
-    this._snackBar.open("Edited the course.", undefined, {duration: 3600});
-    this.editCourseForm.reset();
   }
 
 }
@@ -134,25 +110,23 @@ export class EditCourseComponent implements OnInit {
   templateUrl: './add-assignment.component.html',
   styleUrls: ['./view-course.component.scss']
 })
-export class AddAssignmentComponent implements OnInit {
+export class AddAssignmentComponent {
 
-  course: Course = new Course(0, "", new User(-1), "", new Date(), new Date(), [], "", []);
-
-  addAssignmentForm = this.formBuilder.group({
-    name: '',
-    description: "",
-    date: new Date()
-  });
+  course: Course;
+  addAssignmentForm: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.course = Courses[this.data.courseId];
-  }
+    private formBuilder: FormBuilder) {
+      this.course = Courses[this.data.courseId];
+      this.addAssignmentForm = formBuilder.group({
+        name: [undefined, Validators.required],
+        description: [undefined, Validators.required],
+        date: [undefined, Validators.required],
+      });
+    }
 
   onSubmit(): void {
     this.course.assignments?.push(new Assignment(

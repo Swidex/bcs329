@@ -1,13 +1,8 @@
-
-.outer-container {
-    background-color: #3f51b5;
+:host ::ng-deep .mat-drawer-container {
+    background-color: #3f51b5 !important;
 }
 
-form {
-    width: 100%;
-}
-
-form h1, h2 {
+form h1 {
     text-align: center;
 }
 
@@ -22,9 +17,15 @@ mat-form-field {
     margin-top: 0.5rem;
 }
 
+form {
+    text-align: center;
+    width: 100%;
+    padding-top: 100px;
+}
+
 .corner-btn {
     padding: 1rem;
     margin: 1rem;
     position: absolute;
-    left:0;
+    right:0;
 }

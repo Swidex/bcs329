@@ -1,1 +1,31 @@
-<p>homecare works!</p>
+<mat-toolbar color="primary">
+    Home Care
+    <div class="spacer"></div>
+    <mat-chip-listbox multiple aria-label="filtering">
+        <div *ngFor="let t of tags">
+            <mat-chip-option multiple (click)="refreshActivities(t);" [selected]="strcmp(t)">{{t}}</mat-chip-option>
+        </div>
+    </mat-chip-listbox>
+</mat-toolbar>
+<div class="outer-container">
+    <div class="inner-container">
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let a of filteredActivies">
+                <mat-card-header>
+                    <mat-card-subtitle>{{a.fee}}</mat-card-subtitle>
+                    <mat-card-title>{{a.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{a.tags}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button [disabled]="hasRequested(a.id)" mat-button (click)="requestActivity(a.id)">REQUEST</button>
+                    <div class="spacer"></div>
+                    <button *ngIf="hasRequested(a.id)" (click)="removeActivity(a.id)" mat-button>CANCEL</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>  
+    </div>
+</div>

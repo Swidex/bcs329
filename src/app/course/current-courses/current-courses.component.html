@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+    Courses
+    <div class="spacer"></div>
+    <div class="toolbar-nav-buttons">
+        <button mat-flat-button color="primary" routerLink="/course/current" disabled>Current</button>
+        <button mat-flat-button color="primary" routerLink="/course/available">New</button>
+        <button mat-flat-button color="primary" routerLink="/course/schedule">Schedule</button>
+    </div>
+</mat-toolbar>
+<div class="outer-container">
+    <div class="inner-container">
+        <div class="card-container">
+            <mat-card class="item-card" *ngFor="let course of enrolledCourses">
+                <mat-card-header>
+                    <mat-card-subtitle>{{course.prof!.first_name}} {{course.prof!.last_name}}</mat-card-subtitle>
+                    <mat-card-title>{{course.name}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{course.desc}}
+                    </p>
+                    <span style="font-size: .75rem; font-weight: 700;">DURATION</span><br>
+                    <span>{{course.start_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span> -
+                    <span>{{course.end_date!.toLocaleString(undefined, {year: "numeric", month: "short", day: "numeric"})}}</span>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button [routerLink]="['/course/view']" [queryParams]="{ cid: course.id}">OPEN</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

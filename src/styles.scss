@@ -3,38 +3,39 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-mat-drawer-content {
-    overflow-x: hidden;
-}
-
-mat-drawer-container {
+app-root {
+    display: flex;
+    width: 100vw;
     height: 100vh;
+}
+mat-drawer-container { flex: 1 1 auto; }
+
+app-root {
+    display: flex;
+    flex-flow: column;
 }
 
 .outer-container {
-    height: 100%;
     width: 100%;
 }
 
 .inner-container {
     width: 70vw;
+    height: 100%;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .card-container {
-    margin-top: 100px;
-    padding-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 100%;
     column-gap: 50px;
     row-gap: 50px;
-    display: grid;
+    display: inline-grid;
 }
 
 .item-card {
-    height: 300px;
+    height: 400px;
     min-height: 200px;
 }
 
@@ -83,6 +84,32 @@ mat-card-content{
     bottom: 20px;
 }
 
+.toolbar-nav-buttons>button {
+    margin-left: 10px;
+}
+
+.form-element {
+    padding: .5%;
+}
+.form-field-100 {
+    width: 99%;
+}
+.form-field-75 {
+    width: 74%;
+}
+.form-field-50 {
+    width: 49%;
+}
+.form-field-25 {
+    width: 24%;
+}
+
+.item-list {
+    margin: 0;
+    padding: 0;
+    width: 19.9vw;
+}
+
 /* Smartphones */
 @media only screen 
 and (min-device-width : 320px) 
@@ -90,12 +117,31 @@ and (max-device-width : 480px) {
     .card-container {
         grid-template-columns: repeat(1, 1fr);
     }
+    mat-drawer {
+        min-width: 100%;
+    }
+    .form-field-75 {
+        width: 100%;
+    }
+    .form-field-50 {
+        width: 100%;
+    }
+    .form-field-25 {
+        width: 100%;
+    }
+    .item-list {
+        width: 99vw;
+        text-align: center;
+    }
 }
 
 @media only screen 
 and (min-width : 321px) {
     .card-container {
         grid-template-columns: repeat(1, 1fr);
+    }
+    mat-drawer {
+        min-width: 100%;
     }
 }
 
@@ -106,6 +152,9 @@ and (max-device-width : 1024px) {
     .card-container {
         grid-template-columns: repeat(2, 1fr);
     }
+    mat-drawer {
+        min-width: 0%;
+    }
 }
 
 /* Desktop and Laptop */
@@ -113,6 +162,9 @@ and (max-device-width : 1024px) {
 and (min-width : 1224px) {
     .card-container {
         grid-template-columns: repeat(3, 1fr);
+    }
+    mat-drawer {
+        min-width: 0%;
     }
 }
 

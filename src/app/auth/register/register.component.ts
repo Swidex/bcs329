@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Users } from 'src/app/mock-users';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/dataTypes';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,49 +12,51 @@ import { User } from 'src/app/dataTypes';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-
-  register: boolean = false;
-  registerForm = this.formBuilder.group({
-    email: "",
-    first_name: "",
-    last_name: "",
-    password: "",
-  })
+  registerForm: FormGroup;
   
   constructor(
     private formBuilder: FormBuilder,
-    public router: Router,
+    private router: Router,
+    private authService: AuthService,
     private _snackBar: MatSnackBar,
-  ) {}
-
-  ngOnInit(): void {
-      
+  ) {
+    this.registerForm = this.formBuilder.group({
+      email: [undefined, [Validators.required, Validators.email]],
+      first_name: [undefined, [Validators.required]],
+      last_name: [undefined, [Validators.required]],
+      password: [undefined, [Validators.required, Validators.minLength(6)]],
+    })
   }
 
-  onSubmit(): void {
-    var fail:boolean = false;
-    for (let User of Users) {
-      if (User.email == this.registerForm.value.email) {
-        fail = true;
-        break;
+  register(): boolean {
+    const val = this.registerForm.value;
+
+    if (val.email && val.first_name && val.last_name && val.password )
+    {
+      for (let User of Users) {
+        if (User.email == this.registerForm.value.email) {
+          this._snackBar.open("This email has already been registered.", "Dismiss");
+          return false;
+        }
       }
-    }
-    if (fail) {
-      this._snackBar.open("This email has already been registered.", "Dismiss");
-    } else {
-      var uid:number = Users.length;
+
+      var uid: number = Users.length;
       Users.push(new User(
         uid,
-        this.registerForm.value.first_name!,
-        this.registerForm.value.last_name!,
-        this.registerForm.value.email!,
-        this.registerForm.value.password!
+        val.first_name,
+        val.last_name,
+        val.email,
+        val.password,
       ));
-      localStorage.setItem('userId', String(uid));
-      this._snackBar.open("Registration Successful", undefined, {duration: 3600});
-      this.router.navigate(['/dashboard']);
+
+      if (this.authService.login(val.email, val.password))
+      {
+        this._snackBar.open("Authentication Success", undefined, {duration: 3600});
+        this.router.navigate(['/dashboard']);
+        return true;
+      }
     }
     
+    return false;
   }
-
 }

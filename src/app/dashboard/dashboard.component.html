@@ -1,0 +1,15 @@
+<div class="outer-container">
+    <div class="inner-container">
+        <div class="container">
+            <h1>
+                Start here!
+            </h1>
+            <div class="card-container">
+                <mat-card routerLink={{p.link}} matRipple class="full-card" *ngFor="let p of pages">
+                    <mat-icon>{{p.icon}}</mat-icon>
+                    <span>{{p.name}}</span>
+                </mat-card>
+            </div>
+        <div>
+    </div>
+</div>

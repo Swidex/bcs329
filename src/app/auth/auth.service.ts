@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../dataTypes';
 import { Users } from '../mock-users';
 
@@ -7,7 +8,9 @@ import { Users } from '../mock-users';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   login(email:string, password:string) {
     for (let u of Users) {
@@ -26,7 +29,8 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return (localStorage.getItem("token") != null);
+    const status = localStorage.getItem("token");
+    return status != null;
   }
 
   public getUserData():User {
@@ -41,5 +45,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem("token");
+    this.router.navigate(['login']);
   }
 }

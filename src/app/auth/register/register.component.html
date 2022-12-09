@@ -5,11 +5,8 @@
     <div class="inner-container">
         <form [formGroup]="registerForm">
             <h1>
-                Best Community Service
-            </h1>
-            <h2>
                 Register
-            </h2>
+            </h1>
             <mat-form-field MatFormFieldControl="email" color="accent" appearance="outline">
                 <mat-label>Email Address</mat-label>
                 <input matInput id="email" formControlName="email" type="email">
@@ -26,7 +23,7 @@
                 <mat-label>Password</mat-label>
                 <input matInput id="password" formControlName="password" type="password">
             </mat-form-field>
-            <button class="fw-btn" mat-flat-button color="accent" type="submit" (click)="onSubmit()">
+            <button class="fw-btn" mat-flat-button color="primary" type="submit" (click)="register()">
                 Register
             </button>
         </form>

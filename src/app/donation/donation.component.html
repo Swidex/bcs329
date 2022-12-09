@@ -1,0 +1,27 @@
+<div class="outer-container">
+    <div class="inner-container">
+        <form [formGroup]="donationForm">
+            <h1>
+                Make a Donation
+            </h1>
+            
+            <div class="form-element form-field-100">
+                
+                <mat-form-field class="form-element form-field-25" MatFormFieldControl="amount" color="accent"  appearance="outline">
+                    <mat-label>Amount</mat-label>
+                    <input matInput id="amount" formControlName="amount" type="number">
+                </mat-form-field>
+                <mat-form-field class="form-element form-field-75" MatFormFieldControl="message" color="accent"  appearance="outline">
+                    <mat-label>Message</mat-label>
+                    <input matInput id="message" formControlName="message" type="text">
+                </mat-form-field>
+            </div>
+            <button [disabled]="donationForm.invalid || !authService.isLoggedIn()" class="fw-btn" mat-flat-button color="accent" type="submit" (click)="onSubmit(false)">
+                Donate
+            </button>
+            <button [disabled]="donationForm.invalid" class="fw-btn" mat-stroked-button color="accent" type="submit" (click)="onSubmit(true)">
+                Donate Anonymously
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   form:FormGroup;
   
@@ -21,9 +20,15 @@ export class LoginComponent {
     private _snackBar: MatSnackBar,
   ) {
     this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.email,  Validators.required]],
+      password: ['', [Validators.required]]
     });
+  }
+
+  ngOnInit(): void {
+      if (this.authService.isLoggedIn()) {
+        this.router.navigate(['/dashboard']);
+      }
   }
 
   login() {
@@ -33,9 +38,12 @@ export class LoginComponent {
       if (this.authService.login(val.email, val.password))
         {
           this._snackBar.open("Authentication Success", undefined, {duration: 3600});
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/dashboard']);
+          return true;
         }
     }
+    this._snackBar.open("Authentication Failure", "Dismiss", {duration: 3600});
+    return false;
   }
 
 }
