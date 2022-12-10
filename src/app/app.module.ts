@@ -40,6 +40,7 @@ import { ScheduleComponent } from './course/schedule/schedule.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ShuttleComponent } from './transportation/shuttle/shuttle.component';
 import { CarpoolComponent, CreateCarpoolComponent } from './transportation/carpool/carpool.component';
+import { ViewCarpoolComponent, EditCarpoolComponent } from './transportation/view/view-carpool.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,8 @@ import { CarpoolComponent, CreateCarpoolComponent } from './transportation/carpo
     ShuttleComponent,
     CarpoolComponent,
     CreateCarpoolComponent,
+    ViewCarpoolComponent,
+    EditCarpoolComponent,
   ],
   imports: [
     BrowserModule,

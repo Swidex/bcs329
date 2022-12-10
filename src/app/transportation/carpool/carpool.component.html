@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    Transporation
+    Transportation
     <div class="spacer"></div>
     <mat-chip-listbox>
         <mat-chip-option (click)="refreshCarpools('open')" [selected]="tag=='open'">open</mat-chip-option>
@@ -16,13 +16,16 @@
         <div class="card-container">
             <mat-card class="item-card" *ngFor="let carpool of carpools">
                 <mat-card-header>
-                    <mat-card-subtitle>{{carpool.owner?.first_name}} {{carpool.owner?.last_name}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{carpool.destination}}</mat-card-subtitle>
                     <mat-card-title>{{carpool.group_name}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <span>MEMBERS</span>
-                    <p *ngFor="let member of carpool.members">
-                        {{member.first_name}} {{member.last_name}}
+                    <p>
+                        <span class="card-text-header">MEMBERS</span><br>
+                        <span *ngFor="let member of carpool.members">
+                            <span *ngIf="member == carpool.owner">(Owner)</span>
+                            {{member.first_name}} {{member.last_name}}<br>
+                        </span>
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
@@ -31,7 +34,7 @@
                         <span *ngIf="carpool.status=='closed' && carpool.members!.indexOf(user) == -1">CLOSED</span>
                         <span *ngIf="carpool.members!.indexOf(user) > -1">JOINED</span>
                     </button>
-                    <button mat-button *ngIf="carpool.members!.indexOf(user) > -1">VIEW</button>
+                    <button mat-button *ngIf="carpool.members!.indexOf(user) > -1" [routerLink]="['/transportation/view']" [queryParams]="{ id: carpool.id}">VIEW</button>
                 </mat-card-actions>
             </mat-card>
         </div>

@@ -31,7 +31,7 @@ export const Carpools: Carpool[] = [
         group_name: "Ben's Group",
         destination: "Fredrikson Court Dr.",
         status: "closed",
-        time: new Date(12/15/21),
+        time: new Date(),
         owner: Users[1],
         members: [Users[1]],
     },
@@ -40,7 +40,7 @@ export const Carpools: Carpool[] = [
         group_name: "The Avengers",
         destination: "Manhattan",
         status: "open",
-        time: new Date(12/15/21),
+        time: new Date(),
         owner: Users[5],
         members: [Users[5]],
     }

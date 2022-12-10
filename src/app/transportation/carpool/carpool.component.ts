@@ -55,7 +55,7 @@ export class CarpoolComponent implements OnInit {
     this._snackBar.open("You have joined " + Carpools[groupId].group_name + ".", undefined, {duration: 3600});
     Carpools[groupId].members?.push(this.user);
     this.refreshCarpools("");
-    this.router.navigate(['transportation/carpool/view/'], {queryParams: { gid:groupId }});
+    this.router.navigate(['transportation/view/'], {queryParams: { id:groupId }});
     return true;
   }
 
@@ -72,7 +72,7 @@ export class CarpoolComponent implements OnInit {
       this.refreshCarpools(this.tag, true);
       this._snackBar.open(msg, undefined, {duration: 3600});
       console.log(Carpools);
-      //this.router.navigate(['/transportation/carpool/view'], {queryParams: { id: result.carpool.id }});
+      this.router.navigate(['/transportation/view'], {queryParams: { id: result.carpool.id }});
     });
   }
 

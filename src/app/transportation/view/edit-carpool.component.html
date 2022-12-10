@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Edit Carpool</h2>
+<mat-dialog-content>
+    <form [formGroup]="editCarpoolForm">
+
+        <mat-form-field class="form-element form-field-100" MatFormFieldControl="group_name" appearance="fill">
+            <mat-label>Group Name</mat-label>
+            <input matInput id="group_name" formControlName="group_name">
+        </mat-form-field>
+
+        <mat-form-field class="form-element form-field-100" MatFormFieldControl="destination" appearance="fill">
+            <mat-label>Destination</mat-label>
+            <input matInput id="destination" formControlName="destination">
+        </mat-form-field>
+
+        
+        <mat-form-field class="form-element form-field-100" MatFormFieldControl="time" appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="time_picker" formControlName="time">
+            <mat-datepicker-toggle matIconSuffix [for]="time_picker"></mat-datepicker-toggle>
+            <mat-datepicker #time_picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="form-element form-field-100">
+            <mat-label>Group Status</mat-label>
+            <mat-radio-group formControlName="status" aria-label="status">
+                <mat-radio-button [checked]="editCarpoolForm.get('status')!.value==='open'" value="open">
+                    Open
+                </mat-radio-button>
+                <mat-radio-button [checked]="editCarpoolForm.get('status')!.value==='closed'" value="closed">
+                    Closed
+                </mat-radio-button>
+            </mat-radio-group>              
+        </div>
+
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button [disabled]="editCarpoolForm.invalid" (click)="onSubmit()" type="submit">Edit</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

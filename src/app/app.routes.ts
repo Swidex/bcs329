@@ -13,6 +13,7 @@ import { ScheduleComponent } from './course/schedule/schedule.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ShuttleComponent } from './transportation/shuttle/shuttle.component';
 import { CarpoolComponent } from './transportation/carpool/carpool.component';
+import { ViewCarpoolComponent } from './transportation/view/view-carpool.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -34,6 +35,10 @@ export const routes: Routes = [
         path: 'carpool',
         component: CarpoolComponent,
       },
+      {
+        path: 'view',
+        component: ViewCarpoolComponent,
+      }
     ]},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'rent', component: RentComponent, canActivate: [AuthGuard]},
