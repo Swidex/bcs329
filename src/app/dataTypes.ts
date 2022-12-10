@@ -56,6 +56,7 @@ export class Shuttle {
         public name?: string,
         public destination?: string,
         public time?: Date,
+        public link?: string,
     ) {}
 
 }

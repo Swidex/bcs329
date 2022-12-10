@@ -23,7 +23,7 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button [disabled]="hasRented(Rentable.id)" (click)="openRentMenu(Rentable.id)" mat-button>RENT</button>
-                    <div class="spacer"></div><button *ngIf="hasRented(Rentable.id)" (click)="cancelRental(Rentable.id)" mat-button>EDIT RENTAL</button>
+                    <div class="spacer"></div><button *ngIf="hasRented(Rentable.id)" (click)="cancelRental(Rentable.id)" mat-button>CANCEL RENTAL</button>
                 </mat-card-actions>
             </mat-card>
         </div>

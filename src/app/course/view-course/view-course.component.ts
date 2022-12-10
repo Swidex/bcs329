@@ -31,13 +31,29 @@ export class ViewCourseComponent {
       })
     }
 
-  leaveCourse(): void {
-    var index = this.course.students?.indexOf(this.user);
+  leaveCourse(): boolean {
+    // splice doesn't work with only length of one
+    if (this.course.students!.length == 1) {
+      this.course.students! = [];
+      this._snackBar.open("You have left " + this.course.name + ".", undefined, {duration: 3600});
+      this.router.navigate(['/course']); 
+      return false;
+    }
+
+    if (this.user == this.course.prof!) {
+      Courses.splice(this.course.id!, 1);
+      this._snackBar.open("You have disbanded " + this.course.name + ".", undefined, {duration: 3600});
+      this.router.navigate(['/transportation/carpool']);
+      return true;
+    }
+
+    var index = this.course.students!.indexOf(this.user);
     if (index && index > -1) {
-      this.course.students?.splice(index, 1);
+      this.course.students!.splice(index, 1);
     }
     this._snackBar.open("You have left " + this.course.name + ".", undefined, {duration: 3600});
-    this.router.navigate(['/course']);
+    this.router.navigate(['/course']); 
+    return true;
   }
 
   editCourse(): void {

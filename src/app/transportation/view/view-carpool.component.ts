@@ -48,12 +48,21 @@ export class ViewCarpoolComponent {
   }
 
   leaveCarpool(): boolean {
+    // splice doesn't work with only length of one
+    if (this.carpool.members!.length == 1) {
+      this.carpool.members! = [];
+      this._snackBar.open("You have left " + this.carpool.group_name + ".", undefined, {duration: 3600});
+      this.router.navigate(['/transportation/carpool']);
+      return false;
+    }
+
     if (this.user == this.carpool.owner!) {
       this._snackBar.open("You have disbanded " + this.carpool.group_name + ".", undefined, {duration: 3600});
       this.router.navigate(['/transportation/carpool']);
       Carpools.splice(this.carpool.id!, 1);
       return true;
     }
+
     var index = this.carpool.members!.indexOf(this.user);
     if (index && index > -1) {
       this.carpool.members!.splice(index, 1);

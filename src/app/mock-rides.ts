@@ -9,16 +9,19 @@ export const Shuttles: Shuttle[] = [
         id: 1,
         name: "Cardinal 21",
         destination: "Fredrikson Court Dr.",
+        link: "https://www.cyride.com/schedules/school-year-schedule/weekdays/21-cardinal",
     },
     {
         id: 2,
         name: "Cardinal 25",
         destination: "Fredrikson Court",
+        link: "https://www.cyride.com/schedules/school-year-schedule/weekdays/25-cardinal",
     },
     {
         id: 3,
         name: "Blue 3",
         destination: "Friley Dorms",
+        link: "https://www.cyride.com/schedules/school-year-schedule/weekdays/3-blue",
     },
 ]
 

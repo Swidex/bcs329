@@ -111,8 +111,8 @@ export class CreateCarpoolComponent {
     this.dialogRef.close({
       carpool: new Carpool(
         Carpools.length,
+        form.group_name,
         form.destination,
-        form.name,
         form.time,
         form.status,
         this.user,
