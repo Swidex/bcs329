@@ -37,7 +37,7 @@ export const Courses: Course[] = [
     },
     {
         id: 2,
-        name: "CPRE 309",
+        name: "CPRE 308",
         prof: Users[3],
         desc: "Integer quis auctor elit sed vulputate. Neque ornare aenean euismod elementum nisi quis eleifend quam. Fermentum leo vel orci porta non pulvinar neque.",
         requirements: "CPRE 388",

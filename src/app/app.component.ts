@@ -17,7 +17,7 @@ export class AppComponent {
     { link: "/dashboard", name:"Dashboard", icon: "dashboard"},
     { link: "/rent", name: "Rent", icon: "sell"},
     { link: "/course", name: "Courses", icon: "apple"},
-    { link: "/transportation", name: "Transporation", icon: "bus"},
+    { link: "/transportation", name: "Transportation", icon: "bus"},
     { link: "/homecare", name: "Home Care", icon: "woman"},
     { link: "/donation", name: "Donation", icon: "home"},
   ]

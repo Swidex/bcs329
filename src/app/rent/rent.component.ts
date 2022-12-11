@@ -78,6 +78,7 @@ export class RentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       var msg: string;
       if (result) {
+        if (!this.user.rental) { this.user.rental = []; }
         this.user.rental!.push(result.data);
         msg = "Purchase rental for " + result.data.type + " (" + result.data.name + ", " + result.data.price + "$) successful!";
       } else {

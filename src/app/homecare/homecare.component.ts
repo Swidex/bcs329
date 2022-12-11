@@ -76,7 +76,8 @@ export class HomecareComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       var msg: string;
       if (result.activity) {
-        this.user.activity!.push(result.activity);
+        if (!this.user.activity) this.user.activity = [];
+        this.user.activity.push(result.activity);
         msg = "Request for " + result.activity.name + " successful!";
       } else {
         msg = "Purchase canceled."

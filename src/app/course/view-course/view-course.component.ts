@@ -145,7 +145,10 @@ export class AddAssignmentComponent {
     }
 
   onSubmit(): void {
-    this.course.assignments?.push(new Assignment(
+    if (!this.course.assignments) {
+      this.course.assignments = [];
+    }
+    this.course.assignments!.push(new Assignment(
       this.addAssignmentForm.value.name!,
       this.course.name!,
       this.addAssignmentForm.value.date!,
